@@ -2,7 +2,7 @@
 	<img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT1q4RidNW7-RirwV6Nf4Se7l_4YXvpTqvkSQ&usqp=CAU" height="200" width="200" alt="Responsive Logo" />
 </p>
 <p align="center">
-	<a href="https://pub.dev/packages/responsive_size"><img src="https://img.shields.io/badge/pub-v0.0.1-blue" alt="Pub.dev Badge"></a>
+	<a href="https://pub.dev/packages/responsive_s"><img src="https://img.shields.io/badge/pub-v0.0.1-blue" alt="Pub.dev Badge"></a>
 	</p>
 
 # Responsive_s
@@ -57,14 +57,14 @@ Widget build(BuildContext context) {
 * phone:
 
 <p align="center">
-	<img src="https://github.com/adelhammoda/responsive/blob/master/assets/example1-p.png" height="400" width="200"  alt="test result" />
-<img src="https://github.com/adelhammoda/responsive/blob/master/assets/example1-o.png" height="200" width="400"  alt="test result" />
+	<img src="https://github.com/adelhammoda/responsive_s/blob/master/assets/example1-p.png" height="400" width="200"  alt="test result" />
+<img src="https://github.com/adelhammoda/responsive_s/blob/master/assets/example1-o.png" height="200" width="400"  alt="test result" />
 </p>
 
 * web:
 
 <p align="center">
-	<img src="https://github.com/adelhammoda/responsive/blob/master/assets/example1-web.png" height="200" width="400"  alt="test result" />
+	<img src="https://github.com/adelhammoda/responsive_s/blob/master/assets/example1-web.png" height="200" width="400"  alt="test result" />
 </p>
 
 ```dart
@@ -103,14 +103,14 @@ Widget build(BuildContext context) {
 * phone:
 
 <p align="center">
-	<img src="https://github.com/adelhammoda/responsive/blob/master/assets/example2-p.png" height="400" width="200"  alt="test result" />
-<img src="https://github.com/adelhammoda/responsive/blob/master/assets/example2-o.png" height="200" width="400"  alt="test result" />
+	<img src="https://github.com/adelhammoda/responsive_s/blob/master/assets/example2-p.png" height="400" width="200"  alt="test result" />
+<img src="https://github.com/adelhammoda/responsive_s/blob/master/assets/example2-o.png" height="200" width="400"  alt="test result" />
 </p>
 
 * web:
 
 <p align="center">
-	<img src="https://github.com/adelhammoda/responsive/blob/master/assets/example2-webpng.png" height="200" width="400"  alt="test result" />
+	<img src="https://github.com/adelhammoda/responsive_s/blob/master/assets/example2-webpng.png" height="200" width="400"  alt="test result" />
 </p>
 
 ```dart
@@ -144,14 +144,14 @@ Widget build(BuildContext context) {
 * phone:
 
 <p align="center">
-	<img src="https://github.com/adelhammoda/responsive/blob/master/assets/example3-p.png" height="400" width="200"  alt="test result" />
-<img src="https://github.com/adelhammoda/responsive/blob/master/assets/example3-o.png" height="200" width="400"  alt="test result" />
+	<img src="https://github.com/adelhammoda/responsive_s/blob/master/assets/example3-p.png" height="400" width="200"  alt="test result" />
+<img src="https://github.com/adelhammoda/responsive_s/blob/master/assets/example3-o.png" height="200" width="400"  alt="test result" />
 </p>
 
 * web:
 
 <p align="center">
-	<img src="https://github.com/adelhammoda/responsive/blob/master/assets/example3-web.png" height="200" width="400"  alt="test result" />
+	<img src="https://github.com/adelhammoda/responsive_s/blob/master/assets/example3-web.png" height="200" width="400"  alt="test result" />
 </p>
 
 ## Overview
