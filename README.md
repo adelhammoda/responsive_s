@@ -78,27 +78,20 @@ Widget build(BuildContext context) {
 
 #### Result:
 
-* phone:
-
 <p align="center">
-	<img src="https://github.com/adelhammoda/responsive_s/blob/master/assets/example1-p.png" height="400" width="200"  alt="test result" />
-<img src="https://github.com/adelhammoda/responsive_s/blob/master/assets/example1-o.png" height="200" width="400"  alt="test result" />
+	<img src="https://github.com/adelhammoda/responsive_s/blob/master/assets/desktop.png" height="400" width="200"  alt="test result" />
+<img src="https://github.com/adelhammoda/responsive_s/blob/master/assets/landscape.png" height="200" width="400"  alt="test result" />
+<img src="https://github.com/adelhammoda/responsive_s/blob/master/assets/portriat.png" height="200" width="400"  alt="test result" />
+<img src="https://github.com/adelhammoda/responsive_s/blob/master/assets/phone.png" height="200" width="400"  alt="test result" />
 </p>
-
-* web:
-
-<p align="center">
-	<img src="https://github.com/adelhammoda/responsive_s/blob/master/assets/example1-web.png" height="200" width="400"  alt="test result" />
-</p>
-
-
 
 ## Overview:
 
 Until now,this package offer many responsive function depending on device:
 
 - you can now initial different length and value depending on device to make your app responsive.
-- **Responsive value** is created to use it as responsive value for font size , radius or any another value.
+- **Responsive value** is created to use it as responsive value for font size , radius or any
+  another value.
 - **Responsive function and responsive widget** return function and widget depending on screen.  
 
 
