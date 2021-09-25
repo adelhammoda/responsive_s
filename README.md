@@ -7,7 +7,7 @@
 
 # Responsive_s
 
-Build any app with your optional responsive for width ,height and font size.
+> Build any app with your optional responsive for width ,height and font size.
 
 Responsive give many optional parameters to control responsive way:
 
