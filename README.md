@@ -79,10 +79,13 @@ Widget build(BuildContext context) {
 #### Result:
 
 <p align="center">
-	<img src="https://github.com/adelhammoda/responsive_s/blob/master/assets/desktop.png" height="400" width="200"  alt="test result" />
-<img src="https://github.com/adelhammoda/responsive_s/blob/master/assets/landscape.png" height="200" width="400"  alt="test result" />
-<img src="https://github.com/adelhammoda/responsive_s/blob/master/assets/portriat.png" height="200" width="400"  alt="test result" />
-<img src="https://github.com/adelhammoda/responsive_s/blob/master/assets/phone.png" height="200" width="400"  alt="test result" />
+	<img src="https://github.com/adelhammoda/responsive_s/blob/master/assets/desktop.png" height="200" width="400"  alt="desktop size" />
+<img src="https://github.com/adelhammoda/responsive_s/blob/master/assets/landscape.png" height="200" width="300"  alt="tablet landscape" />
+</p>
+
+<p align="center">
+<img src="https://github.com/adelhammoda/responsive_s/blob/master/assets/portriat.png" height="200" width="150"  alt="tablet portriat" />
+<img src="https://github.com/adelhammoda/responsive_s/blob/master/assets/phone.png" height="200" width="100"  alt="test result" />
 </p>
 
 ## Overview:
