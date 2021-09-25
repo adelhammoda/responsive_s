@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'dart:ui';
 import 'dart:io';
 
-
 ///have all probably type of screens
 enum ScreenType { phone, desktop, tabletOrIpad, TV, website }
 
@@ -36,29 +35,24 @@ class _ScreenDetector {
       if (realWidth <= 0) return;
       if (realWidth < 480) {
         _screenType = ScreenType.phone;
-        systemEnvironment = Platform.operatingSystem;
       } else if (realWidth > 480 && realWidth < 1200) {
         _screenType = ScreenType.tabletOrIpad;
-        systemEnvironment = Platform.operatingSystem;
-      } else if (realWidth >= 1200 && realWidth <= 1600) {
+      } else if (realWidth >= 1280 && realWidth <= 1920) {
         _screenType = ScreenType.desktop;
-        systemEnvironment = Platform.operatingSystem;
       } else {
         _screenType = ScreenType.TV;
-        systemEnvironment = Platform.operatingSystem;
       }
+      systemEnvironment = Platform.operatingSystem;
     } catch (e) {
-      _screenType = ScreenType.website;
       systemEnvironment = 'un supported operation:maybe website or another ';
-      print('$e');
     } finally {
       Size size = Size(
           _screenType == ScreenType.tabletOrIpad ||
-              _screenType == ScreenType.phone
+                  _screenType == ScreenType.phone
               ? realWidth
               : realHeight,
           _screenType == ScreenType.tabletOrIpad ||
-              _screenType == ScreenType.phone
+                  _screenType == ScreenType.phone
               ? realHeight
               : realWidth);
       _deviceInfo = new _DeviceInfo(
@@ -73,178 +67,215 @@ class _ScreenDetector {
     if (orientation == Orientation.portrait) {
       _screenDimensionDet(width, height);
     } else {
-      _screenDimensionDet(height, width);
+      final tempSize = new Size(width, height);
+      late final bool env;
+      try{
+        env=Platform.isAndroid||Platform.isIOS;
+      }catch(e){
+        env =false;
+      }
+      if(env)
+        _screenDimensionDet(height, width);
+     else if (tempSize.longestSide > 1280 && tempSize.shortestSide > 720)
+        _screenDimensionDet(width, height);
+      else
+        _screenDimensionDet(height, width);
     }
   }
 }
-///is the percent of width and height.
-
-class ResponsiveHandler extends _ScreenDetector {
-  ///customUserWidth and customUserHeight is used
-  ///for phone or tabletOrIpad screen type and return optional width and height when
-  ///orientation is equal to landscape => NOTE: only for phone and tablet or ipad.
-  double _customUserWidth, _customUserHeight;
-  double _userWidth, _userHeight;
 
 
-  ///when responsiveMethod is equal to staticSize it mean width and height don't
-  ///change when the device rotation.
-  ///
-  ///  for example: on portrait width =60% =370.6 ,height=30%=220.3.on landscape width =370.6 ,height=220.3
-  ///when responsiveMethod is equal to SizeChangesDependingOnOrientation
-  ///it mean width and height percentage is taken from real size of device and
-  ///they will change when device rotation.
-  ///
-  ///for example: on portrait width =60% =370.6 ,height=30%=220.3  .on landscape width = 520.2 , height =114.9
-  ResponsiveOrientationMethod _responsiveOrientationMethod;
+///The way that the package is respond to the  values
+enum ResponsiveForChangeableOrientation {
+  ///Meaning from width and height of device without caring about orientation.
+  fromPhysicalDimension,
+  ///The orientation will be important when this choice is enabled.
+  fromRealDimension
+}
 
-  ///remove the padding of screen.
-  bool _removePadding;
+class _ResponsiveHandler extends _ScreenDetector {
+
+
+  final ResponsiveForChangeableOrientation _responsiveForChangeableOrientation;
+
+  ///(For mobile)Calculate ths size without the padding of screen.
+  final bool _removePadding;
   late Size _size;
 
-  ResponsiveHandler(
-      BuildContext context,
-      this._responsiveOrientationMethod,
-      this._customUserHeight,
-      this._customUserWidth,
-      this._userHeight,
-      this._userWidth,
-      this._removePadding)
+  _ResponsiveHandler(BuildContext context,
+      this._responsiveForChangeableOrientation, this._removePadding)
       : super(context) {
-    if (_userWidth < 0 ||
-        _userHeight < 0 ||
-        _customUserHeight < 0 ||
-        _customUserWidth < 0) {
-      throw 'width or height is equal to negative number .';
-    }
-    // print(context.);
-    _updateSize();
+    _unresponsiveSize();
   }
 
-  _updateSize() {
+  _unresponsiveSize() {
     _size = Size(
-        _userWidth *
-            (_deviceInfo.size.width -
-                (_removePadding
-                    ? (_deviceInfo.padding.right + _deviceInfo.padding.left) /
+        _deviceInfo.size.width -
+            (_removePadding
+                ? (_deviceInfo.padding.right + _deviceInfo.padding.left) /
                     window.devicePixelRatio
-                    : 0)) /
-            100,
-        _userHeight *
-            (_deviceInfo.size.height -
-                (_removePadding
-                    ? (_deviceInfo.padding.top / window.devicePixelRatio)
-                    : 0)) /
-            100);
+                : 0),
+        _deviceInfo.size.height -
+            (_removePadding
+                ? (_deviceInfo.padding.top / window.devicePixelRatio)
+                : 0));
   }
 
-  Size basicResponsive() {
-    _updateSize();
-    if ((_screenType == ScreenType.phone ||
-        _screenType == ScreenType.tabletOrIpad) &&
-        _responsiveOrientationMethod ==
-            ResponsiveOrientationMethod.SizeChangesDependingOnOrientation &&
-        _deviceInfo.orientation == Orientation.landscape) {
-      return Size(
-          _userWidth *
-              (_deviceInfo.size.height -
-                  (_removePadding
-                      ? (_deviceInfo.padding.top /
-                      window.devicePixelRatio)
-                      : 0)) /
-              100,
-          _userHeight *
-              (_deviceInfo.size.width -
-                  (_removePadding
-                      ? (_deviceInfo.padding.top /
-                      window.devicePixelRatio)
-                      : 0)) /
-              100);
-
-    } else
-      return _size;
+  double _percentage(double percent, double length) {
+    return (percent / 100) * length;
   }
 
-  Size optionalResponsive() {
-    _updateSize();
-    if ((_screenType == ScreenType.phone ||
-        _screenType == ScreenType.tabletOrIpad)&&_deviceInfo
-        .orientation ==
-        Orientation.landscape)
-      return Size(_customUserWidth * _deviceInfo.size.height / 100,
-          _customUserHeight * _deviceInfo.size.width / 100);
-    else
-      return Size(_userWidth * _deviceInfo.size.width / 100,
-          _userHeight * _deviceInfo.size.height / 100);
+  double responsiveLength(
+      double length,
+      double lengthForLandscape,
+      double mobileScreenPortrait,
+      double mobileScreenLandscape,
+      double tabletPortraitScreen,
+      double tabletLandscapeScreen,
+      double desktopScreen,
+      double tvScreen) {
+    if (super._screenType == ScreenType.phone) {
+      return super._deviceInfo.orientation == Orientation.portrait
+          ? _percentage(mobileScreenPortrait, length)
+          : _percentage(mobileScreenLandscape, lengthForLandscape);
+    } else if (super._screenType == ScreenType.tabletOrIpad) {
+      return super._deviceInfo.orientation == Orientation.portrait
+          ? _percentage(tabletPortraitScreen, length)
+          : _percentage(tabletLandscapeScreen, lengthForLandscape);
+    } else if (super._screenType == ScreenType.desktop ||
+        super._screenType == ScreenType.website) {
+      return _percentage(desktopScreen, length);
+    } else {
+      return _percentage(tvScreen, length);
+    }
   }
 }
 
-enum ResponsiveOrientationMethod { staticSize, SizeChangesDependingOnOrientation }
+class Responsive {
+  late _ResponsiveHandler _responsiveHandler;
 
-class Responsive extends  ResponsiveHandler {
   Responsive(BuildContext context,
-      {double width = 0,
-        double height = 0,
-        double customWidth = 0,
-        double customHeight = 0,
-        responsiveMethod = ResponsiveOrientationMethod.staticSize,
-        bool removePadding = false})
-      : super(context, responsiveMethod, customHeight, customWidth, height,
-      width, removePadding);
-
-  double setWidth(double width, {double customWidth = -1}) {
-    super._userWidth = width;
-    print('${super._userWidth}');
-    if (customWidth >= 0) {
-      super._customUserWidth = customWidth;
-      return super.optionalResponsive().width;
-    } else {
-      print('i am here');
-      return super.basicResponsive().width;
-    }
+      {responsiveForChangeableOrientation =
+          ResponsiveForChangeableOrientation.fromRealDimension,
+      bool removePadding = true}) {
+    _responsiveHandler = _ResponsiveHandler(
+        context,
+        responsiveForChangeableOrientation = responsiveForChangeableOrientation,
+        removePadding = removePadding);
+  }
+///return the type of screen depending on the  dimension
+  ScreenType get screenType => _responsiveHandler._screenType;
+///return  a responsive  value calculated in percentage
+  double responsiveHeight(
+      {required double forUnInitialDevices,
+      double? forPortraitMobileScreen,
+      double? forLandscapeMobileScreen,
+      double? forPortraitTabletScreen,
+      double? forLandscapeTabletScreen,
+      double? forDesktopScreen,
+      double? forTVScreen}) {
+    return _responsiveHandler.responsiveLength(
+        _responsiveHandler._size.height,
+        _responsiveHandler._responsiveForChangeableOrientation ==
+                ResponsiveForChangeableOrientation.fromPhysicalDimension
+            ? _responsiveHandler._size.height
+            : _responsiveHandler._size.width,
+        forPortraitMobileScreen ?? forUnInitialDevices,
+        forLandscapeMobileScreen ?? forUnInitialDevices,
+        forPortraitTabletScreen ?? forUnInitialDevices,
+        forLandscapeTabletScreen ?? forUnInitialDevices,
+        forDesktopScreen ?? forUnInitialDevices,
+        forTVScreen ?? forUnInitialDevices);
+  }
+  ///return a responsive  value calculated in percentage
+  double responsiveWidth(
+      {required double forUnInitialDevices,
+      double? forPortraitMobileScreen,
+      double? forLandscapeMobileScreen,
+      double? forPortraitTabletScreen,
+      double? forLandscapeTabletScreen,
+      double? forDesktopScreen,
+      double? forTVScreen}) {
+    return _responsiveHandler.responsiveLength(
+        _responsiveHandler._size.width,
+        _responsiveHandler._responsiveForChangeableOrientation ==
+                ResponsiveForChangeableOrientation.fromPhysicalDimension
+            ? _responsiveHandler._size.width
+            : _responsiveHandler._size.height,
+        forPortraitMobileScreen ?? forUnInitialDevices,
+        forLandscapeMobileScreen ?? forUnInitialDevices,
+        forPortraitTabletScreen ?? forUnInitialDevices,
+        forLandscapeTabletScreen ?? forUnInitialDevices,
+        forDesktopScreen ?? forUnInitialDevices,
+        forTVScreen ?? forUnInitialDevices);
   }
 
-  double setHeight(double height, {double customHeight = -1}) {
-    super._userHeight = height;
-    if (customHeight >= 0) {
-      super._customUserHeight = customHeight;
-      return super.optionalResponsive().height;
-    } else {
-      return super.basicResponsive().height;
-    }
+  double responsiveValue(
+      {required double forUnInitialDevices,
+      double? forPortraitMobileScreen,
+      double? forLandscapeMobileScreen,
+      double? forPortraitTabletScreen,
+      double? forLandscapeTabletScreen,
+      double? forDesktopScreen,
+      double? forTVScreen}) {
+    return _responsiveHandler.responsiveLength(
+        _responsiveHandler._size.shortestSide,
+        _responsiveHandler._size.shortestSide,
+        forPortraitMobileScreen ?? forUnInitialDevices,
+        forLandscapeMobileScreen ?? forUnInitialDevices,
+        forPortraitTabletScreen ?? forUnInitialDevices,
+        forLandscapeTabletScreen ?? forUnInitialDevices,
+        forDesktopScreen ?? forUnInitialDevices,
+        forTVScreen ?? forUnInitialDevices);
   }
-
-  double get width {
-    return super.basicResponsive().width;
+  ///return  a responsive  widget depending on screen type
+  Widget responsiveWidget(
+      {required Widget forUnInitialDevices,
+      Widget? forPortraitMobileScreen,
+      Widget? forLandscapeMobileScreen,
+      Widget? forPortraitTabletScreen,
+      Widget? forLandscapeTabletScreen,
+      Widget? forDesktopScreen,
+      Widget? forTVScreen}) {
+    if (_responsiveHandler._screenType == ScreenType.phone)
+      return (_responsiveHandler._deviceInfo.orientation == Orientation.portrait
+              ? forPortraitMobileScreen
+              : forLandscapeMobileScreen) ??
+          forUnInitialDevices;
+    else if (_responsiveHandler._screenType == ScreenType.tabletOrIpad)
+      return (_responsiveHandler._deviceInfo.orientation == Orientation.portrait
+              ? forPortraitTabletScreen
+              : forLandscapeTabletScreen) ??
+          forUnInitialDevices;
+    else if (_responsiveHandler._screenType == ScreenType.desktop ||
+        _responsiveHandler._screenType == ScreenType.website)
+      return forDesktopScreen ?? forUnInitialDevices;
+    else
+      return forTVScreen ?? forUnInitialDevices;
   }
-
-  double get height {
-    return super.basicResponsive().height;
-  }
-
-  double setFont(double fontSize, {double customFont = -1}) {
-    double temp = super._userWidth;
-    super._userWidth = 100;
-    double font;
-    if (customFont >= 0) {
-      font = super.optionalResponsive().width * fontSize / 100;
-    } else {
-      font = super.basicResponsive().width * fontSize / 100;
-    }
-    super._userWidth = temp;
-    return font;
-  }
-
-  double setRadius(double radius, {double customRadius = -1}) {
-    double temp = super._userWidth;
-    super._userWidth = 100;
-    double font;
-    if (customRadius >= 0) {
-      font = super.optionalResponsive().width * customRadius / 100;
-    } else {
-      font = super.basicResponsive().width * customRadius / 100;
-    }
-    super._userWidth = temp;
-    return font;
+///Use to return different function depending on screen type.
+  responsiveFunction(
+      {required Function forUnInitialDevices,
+      Function? forPortraitMobileScreen,
+      Function? forLandscapeMobileScreen,
+      Function? forPortraitTabletScreen,
+      Function? forLandscapeTabletScreen,
+      Function? forDesktopScreen,
+      Function? forTVScreen}) {
+    if (_responsiveHandler._screenType == ScreenType.phone)
+      return (_responsiveHandler._deviceInfo.orientation == Orientation.portrait
+              ? forPortraitMobileScreen
+              : forLandscapeMobileScreen) ??
+          forUnInitialDevices;
+    else if (_responsiveHandler._screenType == ScreenType.tabletOrIpad)
+      return (_responsiveHandler._deviceInfo.orientation == Orientation.portrait
+              ? forPortraitTabletScreen
+              : forLandscapeTabletScreen) ??
+          forUnInitialDevices;
+    else if (_responsiveHandler._screenType == ScreenType.desktop ||
+        _responsiveHandler._screenType == ScreenType.website)
+      return forDesktopScreen ?? forUnInitialDevices;
+    else
+      return forTVScreen ?? forUnInitialDevices;
   }
 }

@@ -1,3 +1,5 @@
-## 0.0.1
+## 1.0.0+1
 
-* TODO: Describe initial release.
+* solve to many problem.
+* add some features like.
+* now you can choice which widget should use depending on screen.
