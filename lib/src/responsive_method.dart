@@ -69,14 +69,14 @@ class _ScreenDetector {
     } else {
       final tempSize = new Size(width, height);
       late final bool env;
-      try{
-        env=Platform.isAndroid||Platform.isIOS;
-      }catch(e){
-        env =false;
+      try {
+        env = Platform.isAndroid || Platform.isIOS;
+      } catch (e) {
+        env = false;
       }
-      if(env)
+      if (env)
         _screenDimensionDet(height, width);
-     else if (tempSize.longestSide > 1280 && tempSize.shortestSide > 720)
+      else if (tempSize.longestSide > 1280 && tempSize.shortestSide > 720)
         _screenDimensionDet(width, height);
       else
         _screenDimensionDet(height, width);
@@ -84,18 +84,16 @@ class _ScreenDetector {
   }
 }
 
-
 ///The way that the package is respond to the  values
 enum ResponsiveForChangeableOrientation {
   ///Meaning from width and height of device without caring about orientation.
   fromPhysicalDimension,
+
   ///The orientation will be important when this choice is enabled.
   fromRealDimension
 }
 
 class _ResponsiveHandler extends _ScreenDetector {
-
-
   final ResponsiveForChangeableOrientation _responsiveForChangeableOrientation;
 
   ///(For mobile)Calculate ths size without the padding of screen.
@@ -163,9 +161,11 @@ class Responsive {
         responsiveForChangeableOrientation = responsiveForChangeableOrientation,
         removePadding = removePadding);
   }
-///return the type of screen depending on the  dimension
+
+  ///return the type of screen depending on the  dimension
   ScreenType get screenType => _responsiveHandler._screenType;
-///return  a responsive  value calculated in percentage
+
+  ///return  a responsive  value calculated in percentage
   double responsiveHeight(
       {required double forUnInitialDevices,
       double? forPortraitMobileScreen,
@@ -175,7 +175,8 @@ class Responsive {
       double? forDesktopScreen,
       double? forTVScreen}) {
     return _responsiveHandler.responsiveLength(
-        _responsiveHandler._size.height,
+        screenType == ScreenType.desktop || screenType == ScreenType.TV
+            ? _responsiveHandler._size.width:_responsiveHandler._size.height,
         _responsiveHandler._responsiveForChangeableOrientation ==
                 ResponsiveForChangeableOrientation.fromPhysicalDimension
             ? _responsiveHandler._size.height
@@ -187,6 +188,7 @@ class Responsive {
         forDesktopScreen ?? forUnInitialDevices,
         forTVScreen ?? forUnInitialDevices);
   }
+
   ///return a responsive  value calculated in percentage
   double responsiveWidth(
       {required double forUnInitialDevices,
@@ -197,7 +199,9 @@ class Responsive {
       double? forDesktopScreen,
       double? forTVScreen}) {
     return _responsiveHandler.responsiveLength(
-        _responsiveHandler._size.width,
+        screenType == ScreenType.desktop || screenType == ScreenType.TV
+            ? _responsiveHandler._size.height
+            : _responsiveHandler._size.width,
         _responsiveHandler._responsiveForChangeableOrientation ==
                 ResponsiveForChangeableOrientation.fromPhysicalDimension
             ? _responsiveHandler._size.width
@@ -228,6 +232,7 @@ class Responsive {
         forDesktopScreen ?? forUnInitialDevices,
         forTVScreen ?? forUnInitialDevices);
   }
+
   ///return  a responsive  widget depending on screen type
   Widget responsiveWidget(
       {required Widget forUnInitialDevices,
@@ -253,7 +258,8 @@ class Responsive {
     else
       return forTVScreen ?? forUnInitialDevices;
   }
-///Use to return different function depending on screen type.
+
+  ///Use to return different function depending on screen type.
   responsiveFunction(
       {required Function forUnInitialDevices,
       Function? forPortraitMobileScreen,
