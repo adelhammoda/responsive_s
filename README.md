@@ -2,7 +2,7 @@
 	<img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT1q4RidNW7-RirwV6Nf4Se7l_4YXvpTqvkSQ&usqp=CAU" height="200" width="200" alt="Responsive Logo" />
 </p>
 <p align="center">
-	<a href="https://pub.dev/packages/responsive_s"><img src="https://img.shields.io/badge/pub-1.0.0-blue" alt="Pub.dev Badge"></a>
+	<a href="https://pub.dev/packages/responsive_s"><img src="https://img.shields.io/badge/pub-1.0.1-blue" alt="Pub.dev Badge"></a>
 	</p>
 
 # Responsive_s

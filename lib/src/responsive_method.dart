@@ -76,8 +76,9 @@ class _ScreenDetector {
       }
       if(env)
         _screenDimensionDet(height, width);
-     else if (tempSize.longestSide > 1280 && tempSize.shortestSide > 720)
+     else if (tempSize.longestSide >=1280 && tempSize.shortestSide >= 720) {
         _screenDimensionDet(width, height);
+      }
       else
         _screenDimensionDet(height, width);
     }
@@ -175,7 +176,7 @@ class Responsive {
       double? forDesktopScreen,
       double? forTVScreen}) {
     return _responsiveHandler.responsiveLength(
-        _responsiveHandler._size.height,
+       screenType==ScreenType.desktop||screenType==ScreenType.TV?_responsiveHandler._size.width: _responsiveHandler._size.height,
         _responsiveHandler._responsiveForChangeableOrientation ==
                 ResponsiveForChangeableOrientation.fromPhysicalDimension
             ? _responsiveHandler._size.height
@@ -197,7 +198,7 @@ class Responsive {
       double? forDesktopScreen,
       double? forTVScreen}) {
     return _responsiveHandler.responsiveLength(
-        _responsiveHandler._size.width,
+        screenType==ScreenType.desktop||screenType==ScreenType.TV? _responsiveHandler._size.height:_responsiveHandler._size.width,
         _responsiveHandler._responsiveForChangeableOrientation ==
                 ResponsiveForChangeableOrientation.fromPhysicalDimension
             ? _responsiveHandler._size.width
