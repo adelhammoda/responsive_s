@@ -1,11 +1,11 @@
 name: responsive_s
-description: Responsive pachage that control size and font as you want to make responsive.
+description: Responsive package that control sizes and fonts as you want to make responsive.
 version: 1.1.0
 homepage: https://github.com/adelhammoda/responsive_s.git
 
 environment:
-  sdk: ">=2.12.0 <3.0.0"
-  flutter: ">=1.17.0"
+  sdk: ">=3.1.5 <4.0.0"
+  flutter: ">=3.16.5"
 
 dependencies:
   flutter:
