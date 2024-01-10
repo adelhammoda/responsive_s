@@ -16,5 +16,5 @@ class ConstantDefaultSize{
   static const double maxDefaultMobileWidth  = 728;
 
   ///Default watch Size
-  static const double maxDefaultScreenWatchWidth  = 320;
+  static const double maxDefaultScreenWatchWidth  = 480;
 }

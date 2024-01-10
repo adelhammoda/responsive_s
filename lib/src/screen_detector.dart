@@ -1,7 +1,3 @@
-
-
-
-
 import 'package:flutter/material.dart';
 
 import 'enums/enums.dart';
@@ -24,16 +20,16 @@ class ScreenDetector {
     final bool isLandscape = getDeviceOrientation() == Orientation.landscape;
     final realWidth = size.width;
 
-
-    if (realWidth >= 0 &&
-        realWidth <= defaultSizes.defaultScreenWatchWidth) {
+    if (realWidth >= 0 && realWidth <= defaultSizes.defaultScreenWatchWidth) {
       return ScreenType.smartWatch;
     } else if (realWidth > defaultSizes.defaultScreenWatchWidth &&
         realWidth <= defaultSizes.defaultMobileWidth) {
       return isLandscape ? ScreenType.mobileLandscape : ScreenType.mobilePortrait;
     } else if (realWidth > defaultSizes.defaultMobileWidth &&
         realWidth <= defaultSizes.defaultTabletWidth) {
-      return isLandscape ? ScreenType.tableLandScape : ScreenType.tabletPortrait;
+      return isLandscape
+          ? ScreenType.tableLandScape
+          : ScreenType.tabletPortrait;
     } else if (realWidth > defaultSizes.defaultTabletWidth &&
         realWidth <= defaultSizes.defaultDesktopWidth) {
       return ScreenType.desktop;
