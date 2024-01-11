@@ -14,6 +14,7 @@ class ResponsiveLayout extends StatelessWidget {
     this.desktop,
     this.tvScreen,
     this.smartWatch,
+    this.unresolvedBoundaryWidget,
   });
 
   final Widget defaultWidget;
@@ -24,25 +25,30 @@ class ResponsiveLayout extends StatelessWidget {
   final Widget? desktop;
   final Widget? tvScreen;
   final Widget? smartWatch;
+  final Widget? unresolvedBoundaryWidget;
 
   @override
   Widget build(BuildContext context) {
-    final ScreenDetector screenDetector = ScreenDetector(context);
+    final ScreenDetector screenDetector = ScreenDetector(
+      context,
+    );
     switch (screenDetector.getScreenType()) {
       case ScreenType.TV:
-        return tvScreen ?? defaultWidget;
+        return tvScreen ?? desktop ?? defaultWidget;
       case ScreenType.desktop:
         return desktop ?? defaultWidget;
       case ScreenType.tabletPortrait:
         return tablet ?? defaultWidget;
       case ScreenType.tableLandScape:
-        return tabletLandscape ?? defaultWidget;
+        return tabletLandscape ?? tablet ?? defaultWidget;
       case ScreenType.mobilePortrait:
         return mobile ?? defaultWidget;
       case ScreenType.mobileLandscape:
-        return mobileLandscape ?? defaultWidget;
+        return mobileLandscape ?? mobile ?? defaultWidget;
       case ScreenType.smartWatch:
         return smartWatch ?? defaultWidget;
+      case ScreenType.unresolvedBoundaries:
+        return unresolvedBoundaryWidget ?? defaultWidget;
     }
   }
 }

@@ -11,7 +11,9 @@ class FrameProvider extends InheritedWidget {
   final Size mobilePortraitFrame;
   final Size tvFrame;
   final Size screenWatchFrame;
+  final Size unresolvedBoundariesFrame;
   final CustomDefaultSize defaultSizes;
+  final bool addHeightInCalculating;
 
   FrameProvider({
     required super.child,
@@ -23,6 +25,8 @@ class FrameProvider extends InheritedWidget {
     required this.tabletPortraitFrame,
     required this.screenWatchFrame,
     required this.defaultSizes,
+    required this.unresolvedBoundariesFrame,
+    this.addHeightInCalculating = false,
   });
 
   static FrameProvider of(BuildContext context) =>

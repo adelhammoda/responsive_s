@@ -12,8 +12,9 @@ class ResponsiveWrapper extends StatelessWidget {
   final Size mobilePortraitFrame;
   final Size tvFrame;
   final Size screenWatchFrame;
+  final Size unresolvedBoundariesFrame;
   final CustomDefaultSize defaultSizes;
-
+  final bool addHeightInCalculating;
   const ResponsiveWrapper({
     required this.child,
     this.defaultSizes = const CustomDefaultSize(),
@@ -24,12 +25,15 @@ class ResponsiveWrapper extends StatelessWidget {
     this.tabletLandscapeFrame = FrameConstant.tabletLandscapeFrame,
     this.tabletPortraitFrame = FrameConstant.tabletPortraitFrame,
     this.screenWatchFrame = FrameConstant.screenWatchFrame,
+    this.unresolvedBoundariesFrame = FrameConstant.unresolvedBoundariesFrame,
+    this.addHeightInCalculating = false,
   });
 
   @override
   Widget build(BuildContext context) {
     return FrameProvider(
       defaultSizes: defaultSizes,
+      unresolvedBoundariesFrame: unresolvedBoundariesFrame,
       desktopFrame: desktopFrame,
       mobileLandscapeFrame: mobileLandscapeFrame,
       mobilePortraitFrame: mobilePortraitFrame,
@@ -37,6 +41,7 @@ class ResponsiveWrapper extends StatelessWidget {
       tabletLandscapeFrame: tabletLandscapeFrame,
       tabletPortraitFrame: tabletPortraitFrame,
       tvFrame: tvFrame,
+      addHeightInCalculating: addHeightInCalculating,
       child: child,
     );
   }

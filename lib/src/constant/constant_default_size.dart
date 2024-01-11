@@ -17,4 +17,7 @@ class ConstantDefaultSize{
 
   ///Default watch Size
   static const double maxDefaultScreenWatchWidth  = 480;
+
+  ///Default unresolved boundaries width.
+  static const double maxDefaultUnresolvedWidth = 200;
 }

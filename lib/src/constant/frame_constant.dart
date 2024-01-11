@@ -21,4 +21,7 @@ class FrameConstant {
 
   ///Stander watch frame
   static const screenWatchFrame = Size(320, 320);
+
+  ///Stander unresolved boundaries frame
+  static const unresolvedBoundariesFrame = Size(200, 200);
 }

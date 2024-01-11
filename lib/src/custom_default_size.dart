@@ -15,11 +15,16 @@ class CustomDefaultSize {
   ///Default watch Size
   final double defaultScreenWatchWidth;
 
+
+  ///Default unresolved boundaries width
+  final double defaultUnresolvedWidth;
+
   const CustomDefaultSize({
     this.defaultTvWidth = ConstantDefaultSize.maxDefaultTvWidth,
     this.defaultDesktopWidth = ConstantDefaultSize.maxDefaultDesktopWidth,
     this.defaultTabletWidth = ConstantDefaultSize.maxDefaultTabletWidth,
     this.defaultMobileWidth = ConstantDefaultSize.maxDefaultMobileWidth,
     this.defaultScreenWatchWidth = ConstantDefaultSize.maxDefaultScreenWatchWidth,
+    this.defaultUnresolvedWidth = ConstantDefaultSize.maxDefaultUnresolvedWidth,
   });
 }

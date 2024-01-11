@@ -6,7 +6,8 @@ enum ScreenType {
   tableLandScape,
   tabletPortrait,
   TV,
-  smartWatch
+  smartWatch,
+  unresolvedBoundaries,
 }
 
 ///The way that the package is respond to the  values

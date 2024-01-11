@@ -16,6 +16,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ResponsiveWrapper(
+      addHeightInCalculating: true,
       child: MaterialApp(
         title: 'Responsive',
         theme: ThemeData(
@@ -49,6 +50,7 @@ class _MyHomePageState extends State<MyHomePage> {
         smartWatch:SmartWatchWidget() ,
         tabletLandscape:TabletLandscapeWidget() ,
         tvScreen:TvWidget(),
+        unresolvedBoundaryWidget: Text('Unresolved'),
       ),
     );
   }
